@@ -13,6 +13,7 @@ const localStorageFull = JSON.parse(localStorage.getItem('user'));
 class App extends React.Component {
   state = {
     login: '',
+    search: '',
     ...localStorageFull,
   };
 
@@ -26,6 +27,7 @@ class App extends React.Component {
   render() {
     const {
       login,
+      search,
     } = this.state;
 
     return (
@@ -44,7 +46,13 @@ class App extends React.Component {
                 />
               ) }
             />
-            <Route exact path="/search" component={ Search } />
+            <Route
+              exact
+              path="/search"
+              render={ () => (
+                <Search inputChange={ this.handleChange } search={ search } />
+              ) }
+            />
             <Route exact path="/album/:id" component={ Album } />
             <Route exact path="/favorites" component={ Favorites } />
             <Route exact path="/profile" component={ Profile } />
