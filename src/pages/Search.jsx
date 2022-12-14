@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import MusicCard from '../components/MusicCard';
+import Card from '../components/Card';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
 class Search extends Component {
@@ -59,7 +59,7 @@ class Search extends Component {
                     />
                   </label>
                   <button
-                    type="submit"
+                    type="button"
                     data-testid="search-artist-button"
                     disabled={ !searchButtonValidation }
                     onClick={ () => this.onClickSearch() }
@@ -83,7 +83,7 @@ class Search extends Component {
                                 </h2>
                                 {
                                   apiResult.map((music) => (
-                                    <MusicCard
+                                    <Card
                                       key={ music.collectionId }
                                       artistName={ music.artistName }
                                       collectionName={ music.collectionName }
