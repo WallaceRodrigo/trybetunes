@@ -24,6 +24,10 @@ class App extends React.Component {
     this.setState({ [name]: value });
   };
 
+  onClickSearch = () => {
+    this.setState({ search: '' });
+  };
+
   render() {
     const {
       login,
@@ -50,7 +54,11 @@ class App extends React.Component {
               exact
               path="/search"
               render={ () => (
-                <Search inputChange={ this.handleChange } search={ search } />
+                <Search
+                  inputChange={ this.handleChange }
+                  search={ search }
+                  onClickSearch={ this.onClickSearch }
+                />
               ) }
             />
             <Route exact path="/album/:id" component={ Album } />
