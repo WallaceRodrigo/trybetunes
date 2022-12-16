@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends Component {
   state = {
     favorite: false,
     isLoading: false,
+    favorites: [],
+  };
+
+  componentDidMount() {
+    this.getFavs();
+  }
+
+  getFavs = async () => {
+    const favorites = await getFavoriteSongs();
+    this.setState({ favorites });
+    return favorites;
   };
 
   addFav = async () => {
@@ -14,6 +25,8 @@ class MusicCard extends Component {
     this.setState({ isLoading: true });
 
     await addSong(apiReturn);
+
+    await this.getFavs();
 
     this.setState({ favorite: true, isLoading: false });
   };
@@ -30,7 +43,9 @@ class MusicCard extends Component {
 
   render() {
     const { trackName, previewUrl, trackId } = this.props;
-    const { isLoading, favorite } = this.state;
+    const { isLoading, favorites } = this.state;
+
+    const savedFav = favorites.some((fav) => fav.trackId === trackId);
 
     return (
       <div>
@@ -50,7 +65,7 @@ class MusicCard extends Component {
                     type="checkbox"
                     name="favoriteCheck"
                     id="favoriteCheck"
-                    checked={ favorite }
+                    checked={ savedFav }
                     data-testid={ `checkbox-music-${trackId}` }
                     onChange={ () => (this.checkValidation()) }
                   />

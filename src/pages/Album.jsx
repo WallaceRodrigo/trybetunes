@@ -47,13 +47,13 @@ class Album extends Component {
                   <div>
                     {
                       tracks.map((music) => (
-                        <MusicCard
+                        (<MusicCard
                           key={ music.trackId }
                           trackId={ music.trackId }
                           trackName={ music.trackName }
                           previewUrl={ music.previewUrl }
                           apiReturn={ music }
-                        />
+                        />)
                       ))
                     }
                   </div>
